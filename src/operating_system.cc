@@ -22,8 +22,8 @@ void OperatingSystem::jobArrival(Job * j) {
 		node = nodes.front();
 		nodes.pop();
 
-        // allocates memory for every segment
-        File * file = informationManager->getFile(node->str);
+		// allocates memory for every segment
+		File * file = informationManager->getFile(node->str);
 		memoryManager->loadSegment(node->str, file->getSize());
 
 		for (auto child : node->children) {
