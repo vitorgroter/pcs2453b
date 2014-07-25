@@ -5,19 +5,17 @@
 #include <string>
 
 class Memory;
-class OperatingSystem;
 class Scheduler;
 class Segment;
 
 class MemoryManager {
 public:
-	MemoryManager(Scheduler * s, OperatingSystem * os, Memory * m);
-	void loadSegment(std::string name);
+	MemoryManager(Scheduler * s, Memory * m);
+	void loadSegment(std::string name, int size);
 	void printTable();
 
 private:
 	Scheduler * scheduler;
-	OperatingSystem * operatingSystem;
 	Memory * memory;
 
 	Segment * findLoadedSegment(std::string name);

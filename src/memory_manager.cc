@@ -5,27 +5,22 @@
 
 #include "segment.h"
 #include "memory_manager.h"
-#include "operating_system.h"
-#include "file.h"
 #include "common.h"
+#include "memory.h"
 
-MemoryManager::MemoryManager(Scheduler * s, OperatingSystem * os, Memory * m) : scheduler(s), operatingSystem(os), memory(m) {
+MemoryManager::MemoryManager(Scheduler * s, Memory * m) : scheduler(s), memory(m) {
 
 }
 
-void MemoryManager::loadSegment(std::string name) {
+void MemoryManager::loadSegment(std::string name, int size) {
 	printTable();
 	Segment * segment = findLoadedSegment(name);
 
 	// segment is not loaded yet
 	if (segment == nullptr) {
-		File * file = operatingSystem->getFile(name);
-		if (file == nullptr)
-			throw std::logic_error("Memory::loadSegment is trying to load a non-existent file");
-
-		int position = findContiguousMemory(file->getSize());
+		int position = findContiguousMemory(size);
 		if (position != -1) {
-			segment = new Segment(name, position, file->getSize());
+			segment = new Segment(name, position, size);
 			segments.push_back(segment);
 		}
 		else {
@@ -35,7 +30,7 @@ void MemoryManager::loadSegment(std::string name) {
 
 	// segment is already loaded
 	else {
-			segment->increaseReferenceCount();
+		segment->increaseReferenceCount();
 	}
 }
 

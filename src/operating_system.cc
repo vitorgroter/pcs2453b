@@ -4,10 +4,12 @@
 #include "job.h"
 #include "common.h"
 #include "operating_system.h"
+#include "information_manager.h"
+#include "file.h"
 
 OperatingSystem::OperatingSystem(Scheduler * s, Clock * c, Processor * p, Memory * m, Disk * d) : scheduler(s) {
 	processManager = new ProcessManager(scheduler, p);
-	memoryManager = new MemoryManager(scheduler, this, m);
+	memoryManager = new MemoryManager(scheduler, m);
 	informationManager = new InformationManager(scheduler, d, "filesystem.txt");
 }
 
@@ -20,7 +22,9 @@ void OperatingSystem::jobArrival(Job * j) {
 		node = nodes.front();
 		nodes.pop();
 
-		memoryManager->loadSegment(node->str.c_str());
+        // allocates memory for every segment
+        File * file = informationManager->getFile(node->str);
+		memoryManager->loadSegment(node->str, file->getSize());
 
 		for (auto child : node->children) {
 			nodes.push(child);
