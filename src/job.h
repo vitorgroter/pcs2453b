@@ -38,16 +38,5 @@ private:
 	int totalLoadedSegments;
 };
 
-class JobArrivalEvent : public Event {
-public:
-	JobArrivalEvent(OperatingSystem * os, Job * j);
-	~JobArrivalEvent();
-	void execute();
-
-private:
-	OperatingSystem * operatingSystem;
-	Job * job;
-};
-
 #endif // JOB_H
 

@@ -5,6 +5,7 @@
 #include "disk.h"
 #include "operating_system.h"
 #include "job.h"
+#include "events/job_arrival_event.h"
 
 int main() {
 	Scheduler scheduler;

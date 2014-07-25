@@ -98,15 +98,3 @@ void Job::increaseTotalLoadedSegments() {
 		std::cout << "all segments loaded" << std::endl;
 }
 
-JobArrivalEvent::JobArrivalEvent(OperatingSystem * os, Job * j) : operatingSystem(os), job(j) {
-
-}
-
-JobArrivalEvent::~JobArrivalEvent() {
-
-}
-
-void JobArrivalEvent::execute() {
-	operatingSystem->jobArrival(job);
-}
-
