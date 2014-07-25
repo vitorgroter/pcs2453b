@@ -69,9 +69,8 @@ std::list<std::string> readQuotedStringsList(std::istream & stream) {
 
 Tree <std::string> * readStringTree (std::istream & stream) {
 	char c;
-	Tree <std::string> * tree = new Tree <std::string>;
+	Tree <std::string> * tree = new Tree <std::string> (readQuotes(stream));
 
-	tree->data = readQuotes(stream);
 	while ((c = stream.get()) == ' ');
 
 	if (c== '\r' || c == '\n')

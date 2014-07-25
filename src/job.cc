@@ -52,22 +52,35 @@ Job::Job(const char filename[]) {
 		}
 	}
 
-	// makes sure every segment in the segment tree is a valid path string
-	std::queue <Tree <std::string> *> nodes;
-	nodes.push(segmentNameTree);
-	Tree <std::string> * node;
-	while (!nodes.empty()) {
-		node = nodes.front();
-		nodes.pop();
+	// makes sure every segment in the segment name tree is a valid path string and create the segment tree
+	totalSegments = 0;
 
-		if (!isPath(node->data))
+	std::queue <Tree <std::string> *> nameNodes;
+	std::queue <Tree <Segment *> *> segmentNodes;
+	segmentTree = new Tree <Segment *> (nullptr);
+
+	nameNodes.push(segmentNameTree);
+	segmentNodes.push(segmentTree);
+	while (!nameNodes.empty()) {
+		totalSegments++;
+
+		Tree <std::string> * nameNode = nameNodes.front();
+		Tree <Segment *> * segmentNode = segmentNodes.front();
+
+		nameNodes.pop();
+		segmentNodes.pop();
+
+		if (!isPath(nameNode->data))
 			throw std::runtime_error("Job segment is not a path.");
 
-		for (auto child : node->children) {
-			nodes.push(child);
+		for (auto nameChild : nameNode->children) {
+			Tree <Segment *> * segmentChild = new Tree <Segment *> (nullptr);
+			segmentNode->children.push_back(segmentChild);
+			
+			nameNodes.push(nameChild);
+			segmentNodes.push(segmentChild);
 		}
 	}
-	
 
 	/*
 	std::cout << "arrival_time = " << arrivalTime << std::endl;
@@ -76,6 +89,13 @@ Job::Job(const char filename[]) {
 	std::cout << "total_file_accesses = " << totalFileAccesses << std::endl;
 	std::cout << "total_processing_time = " << totalProcessingTime << std::endl;
 	*/	
+}
+
+void Job::increaseTotalLoadedSegments() {
+	totalLoadedSegments++;
+
+	if (totalLoadedSegments == totalSegments)
+		std::cout << "all segments loaded" << std::endl;
 }
 
 JobArrivalEvent::JobArrivalEvent(OperatingSystem * os, Job * j) : operatingSystem(os), job(j) {

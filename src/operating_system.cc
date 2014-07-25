@@ -14,20 +14,30 @@ OperatingSystem::OperatingSystem(Scheduler * s, Clock * c, Processor * p, Memory
 }
 
 void OperatingSystem::jobArrival(Job * j) {
-	std::queue <Tree <std::string> *> nodes;
-	nodes.push(j->getSegmentNameTree());
-	Tree <std::string> * node;
+	std::queue <Tree <std::string> *> nameNodes;
+	std::queue <Tree <Segment *> *> segmentNodes;
 
-	while (!nodes.empty()) {
-		node = nodes.front();
-		nodes.pop();
+	nameNodes.push(j->getSegmentNameTree());
+	segmentNodes.push(j->getSegmentTree());
+
+	Tree <std::string> * nameNode;
+	Tree <Segment *> * segmentNode;
+
+	while (!nameNodes.empty()) {
+		nameNode = nameNodes.front();
+		nameNodes.pop();
+		segmentNode = segmentNodes.front();
+		segmentNodes.pop();
 
 		// allocates memory for every segment
-		File * file = informationManager->getFile(node->data);
-		memoryManager->loadSegment(node->data, file->getSize());
+		File * file = informationManager->getFile(nameNode->data);
+		memoryManager->loadSegment(nameNode->data, file->getSize(), &(segmentNode->data), j);
 
-		for (auto child : node->children) {
-			nodes.push(child);
+		for (auto child : nameNode->children) {
+			nameNodes.push(child);
+		}
+		for (auto child : segmentNode->children) {
+			segmentNodes.push(child);
 		}
 	}
 	

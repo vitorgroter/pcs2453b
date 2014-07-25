@@ -5,6 +5,8 @@
 #include "scheduler.h"
 #include "common.h"
 
+class Segment;
+
 class Job {
 public:
 	Job(const char filename[]);
@@ -17,6 +19,12 @@ public:
 		return segmentNameTree;
 	}
 
+	inline Tree <Segment *> * getSegmentTree() {
+		return segmentTree;
+	}
+
+	void increaseTotalLoadedSegments();
+
 private:
 	double arrivalTime;
 	int totalInputs;
@@ -24,6 +32,10 @@ private:
 	int totalFileAccesses;
 	double totalProcessingTime;
 	Tree <std::string> * segmentNameTree;
+	Tree <Segment *> * segmentTree;
+
+	int totalSegments;
+	int totalLoadedSegments;
 };
 
 class JobArrivalEvent : public Event {

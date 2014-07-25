@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+class Job;
 class Memory;
 class Scheduler;
 class Segment;
@@ -11,7 +12,7 @@ class Segment;
 class MemoryManager {
 public:
 	MemoryManager(Scheduler * s, Memory * m);
-	void loadSegment(std::string name, int size);
+	void loadSegment(std::string name, int size, Segment ** segment, Job * j);
 	void printTable();
 
 private:

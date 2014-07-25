@@ -5,6 +5,10 @@
 
 template <class Type> class Tree {
 public:
+	Tree (Type data) : data(data) {
+
+	}
+
 	std::list <Tree <Type> *> children;	
 	Type data;
 };

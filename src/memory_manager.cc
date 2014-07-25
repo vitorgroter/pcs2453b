@@ -7,21 +7,26 @@
 #include "memory_manager.h"
 #include "common.h"
 #include "memory.h"
+#include "job.h"
 
 MemoryManager::MemoryManager(Scheduler * s, Memory * m) : scheduler(s), memory(m) {
-
+	printTable();
 }
 
-void MemoryManager::loadSegment(std::string name, int size) {
-	printTable();
-	Segment * segment = findLoadedSegment(name);
+void MemoryManager::loadSegment(std::string name, int size, Segment ** segment, Job * j) {
+	*segment = findLoadedSegment(name);
 
 	// segment is not loaded yet
-	if (segment == nullptr) {
+	if (*segment == nullptr) {
 		int position = findContiguousMemory(size);
 		if (position != -1) {
-			segment = new Segment(name, position, size);
-			segments.push_back(segment);
+			*segment = new Segment(name, position, size);
+			segments.push_back(*segment);
+			(*segment)->increaseReferenceCount();
+
+			printTable();
+
+			j->increaseTotalLoadedSegments();
 		}
 		else {
 			// to-do: add segment to segment allocation queue
@@ -30,7 +35,8 @@ void MemoryManager::loadSegment(std::string name, int size) {
 
 	// segment is already loaded
 	else {
-		segment->increaseReferenceCount();
+		(*segment)->increaseReferenceCount();
+		j->increaseTotalLoadedSegments();
 	}
 }
 
@@ -123,6 +129,6 @@ void MemoryManager::printTable() {
 		}
 	}
 
-	std::cout << getPageBreaker("End of Memory Table") << std::endl;
+	std::cout << getPageBreaker("End of Memory Table") << std::endl << std::endl;
 }
 

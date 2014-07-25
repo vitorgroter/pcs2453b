@@ -17,9 +17,9 @@ void Scheduler::executeNextEvent() {
 	time = events.begin()->first;
 	Event * event = events.begin()->second;
 
-	std::cout << time;
-	std::cout << " ";
-	std::cout << std::endl;
+	// std::cout << time;
+	// std::cout << " ";
+	// std::cout << std::endl;
 	event->execute();
 
 	events.erase(events.begin());
