@@ -2,12 +2,8 @@
 #include <cctype>
 #include <stdexcept>
 
+#include "tree.h"
 #include "common.h"
-
-StringNode::~StringNode() {
-	for (auto child : children)
-		delete child;
-}
 
 std::string readString(std::istream & stream) {
 	std::string str;
@@ -71,22 +67,22 @@ std::list<std::string> readQuotedStringsList(std::istream & stream) {
 	return list;
 }
 
-StringNode * readStringNode (std::istream & stream) {
+Tree <std::string> * readStringTree (std::istream & stream) {
 	char c;
-	StringNode * strNode = new StringNode;
-	
-	strNode->str = readQuotes(stream);
-	while((c = stream.get()) == ' ');
+	Tree <std::string> * tree = new Tree <std::string>;
 
-	if(c == '\r' || c == '\n')
-		return strNode;
+	tree->data = readQuotes(stream);
+	while ((c = stream.get()) == ' ');
+
+	if (c== '\r' || c == '\n')
+		return tree;
 	else if (c == ',' || c == '}') {
 		stream.unget();
-		return strNode;
+		return tree;
 	}
 	else if (c == '{') {
 		while (true) {
-			strNode->children.push_back(readStringNode(stream));
+			tree->children.push_back(readStringTree(stream));
 			while ((c = stream.get()) == ' ');
 			if (c == ',')
 				continue;
@@ -99,8 +95,8 @@ StringNode * readStringNode (std::istream & stream) {
 	else {
 		assert(false);
 	}
-	
-	return strNode;
+
+	return tree;
 }
 
 bool isPath(std::string str) {

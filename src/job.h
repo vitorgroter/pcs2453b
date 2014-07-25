@@ -13,8 +13,8 @@ public:
 		return arrivalTime;
 	}
 
-	inline StringNode * getSegmentTree() {
-		return segmentTree;
+	inline Tree <std::string> * getSegmentNameTree() {
+		return segmentNameTree;
 	}
 
 private:
@@ -23,7 +23,7 @@ private:
 	int totalOutputs;
 	int totalFileAccesses;
 	double totalProcessingTime;
-	StringNode * segmentTree;
+	Tree <std::string> * segmentNameTree;
 };
 
 class JobArrivalEvent : public Event {

@@ -22,7 +22,7 @@ Job::Job(const char filename[]) {
 		}
 		else if (varName == "segment_tree") {
 			readEqualSign(file);	
-			segmentTree = readStringNode(file);
+			segmentNameTree = readStringTree(file);
 		}
 		else if (varName == "total_inputs") {
 			readEqualSign(file);
@@ -53,14 +53,14 @@ Job::Job(const char filename[]) {
 	}
 
 	// makes sure every segment in the segment tree is a valid path string
-	std::queue <StringNode *> nodes;
-	nodes.push(segmentTree);
-	StringNode * node;
+	std::queue <Tree <std::string> *> nodes;
+	nodes.push(segmentNameTree);
+	Tree <std::string> * node;
 	while (!nodes.empty()) {
 		node = nodes.front();
 		nodes.pop();
 
-		if (!isPath(node->str))
+		if (!isPath(node->data))
 			throw std::runtime_error("Job segment is not a path.");
 
 		for (auto child : node->children) {

@@ -14,17 +14,17 @@ OperatingSystem::OperatingSystem(Scheduler * s, Clock * c, Processor * p, Memory
 }
 
 void OperatingSystem::jobArrival(Job * j) {
-	std::queue <StringNode *> nodes;
-	nodes.push(j->getSegmentTree());
-	StringNode * node;
+	std::queue <Tree <std::string> *> nodes;
+	nodes.push(j->getSegmentNameTree());
+	Tree <std::string> * node;
 
 	while (!nodes.empty()) {
 		node = nodes.front();
 		nodes.pop();
 
 		// allocates memory for every segment
-		File * file = informationManager->getFile(node->str);
-		memoryManager->loadSegment(node->str, file->getSize());
+		File * file = informationManager->getFile(node->data);
+		memoryManager->loadSegment(node->data, file->getSize());
 
 		for (auto child : node->children) {
 			nodes.push(child);
