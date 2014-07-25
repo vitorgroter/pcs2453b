@@ -3,11 +3,7 @@
 
 #include <map>
 
-class Event {
-public:
-	virtual void execute() = 0;
-	virtual ~Event();
-};
+class Event;
 
 class Scheduler {
 public:

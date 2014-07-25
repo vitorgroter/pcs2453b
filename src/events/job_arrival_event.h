@@ -1,7 +1,7 @@
 #ifndef JOB_ARRIVAL_EVENT_H
 #define JOB_ARRIVAL_EVENT_H
 
-#include "../scheduler.h"
+#include "../event.h"
 
 class Job;
 class OperatingSystem;

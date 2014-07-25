@@ -1,5 +1,6 @@
-#include <iostream>
 #include "scheduler.h"
+
+#include "event.h"
 
 Scheduler::Scheduler() {
 	time = 0.0;
@@ -28,9 +29,5 @@ void Scheduler::executeNextEvent() {
 
 double Scheduler::getTime() {
 	return time;
-}
-
-Event::~Event() {
-
 }
 
