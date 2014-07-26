@@ -14,10 +14,15 @@ int main() {
 	OperatingSystem os(&scheduler, &cpu, &mem, &disk);
 
 
-	Job j("job1.txt");
-	JobArrivalEvent * ja = new JobArrivalEvent(&os, &j);
+	Job j1("job1.txt");
+	Job j2("job2.txt");
 
-	scheduler.scheduleEvent(j.getArrivalTime(), ja);
+	JobArrivalEvent * ja1 = new JobArrivalEvent(&os, &j1);
+	JobArrivalEvent * ja2 = new JobArrivalEvent(&os, &j2);
+
+
+	scheduler.scheduleEvent(j1.getArrivalTime(), ja1);
+	scheduler.scheduleEvent(j2.getArrivalTime(), ja2);
 
 	while (!scheduler.empty()) {
 		scheduler.executeNextEvent();

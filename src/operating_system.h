@@ -17,6 +17,7 @@ public:
 	File * getFile(std::string name);
 
 	void jobArrival(Job * j);
+	void jobFinish(Job * j);
 	void processorRequest(Job * j);
 private:
 	Scheduler * scheduler;

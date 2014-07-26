@@ -8,8 +8,13 @@
 #include "common.h"
 #include "job.h"
 
-Job::Job(const char filename[]) {
+Job::Job(const char filename[]) : name(filename) {
+	processingTime = 0.0;
+	totalLoadedSegments = 0;
 	std::ifstream file(filename);
+
+	if (!file.is_open())
+		throw std::runtime_error("Could not read job info: " + name + " does not exist.");
 
 	while (!file.eof()) {
 		std::string varName;
@@ -93,5 +98,42 @@ Job::Job(const char filename[]) {
 
 void Job::increaseTotalLoadedSegments() {
 	totalLoadedSegments++;
+}
+
+double Job::getArrivalTime() {
+	return arrivalTime;
+}
+
+Tree <std::string> * Job::getSegmentNameTree() {
+	return segmentNameTree;
+}
+
+Tree <Segment *> * Job::getSegmentTree() {
+	return segmentTree;
+}
+
+bool Job::areAllSegmentsLoaded() {
+	std::cout << std::endl;
+	return totalSegments == totalLoadedSegments;
+}
+
+double Job::getTotalProcessingTime() {
+	return totalProcessingTime;
+}
+
+double Job::getProcessingTime() {
+	return processingTime;
+}
+
+void Job::increaseProcessingTime(double dt) {
+	processingTime += dt;
+}
+
+double Job::getRemainingProcessingTime() {
+	return totalProcessingTime - processingTime;
+}
+
+std::string Job::getName() {
+	return name;
 }
 

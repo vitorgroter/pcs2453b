@@ -1,4 +1,5 @@
 #include "scheduler.h"
+#include <iostream>
 
 #include "event.h"
 
@@ -18,9 +19,7 @@ void Scheduler::executeNextEvent() {
 	time = events.begin()->first;
 	Event * event = events.begin()->second;
 
-	// std::cout << time;
-	// std::cout << " ";
-	// std::cout << std::endl;
+	std::cout << std::endl << "time = " << time << std::endl;
 	event->execute();
 
 	events.erase(events.begin());

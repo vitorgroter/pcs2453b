@@ -42,9 +42,22 @@ void MemoryManager::loadSegment(std::string name, int size, Segment ** segment, 
 	}
 
 	if (j->areAllSegmentsLoaded()) {
-		std::cout << "all segments loaded" << std::endl;
+		std::cout << "All segments from job \"" << j->getName();
+		std::cout << "\" loaded." << std::endl;
+
 		ProcessorRequestEvent * event = new ProcessorRequestEvent(j, operatingSystem); 
 		scheduler->scheduleEvent(0.0, event);
+	}
+}
+
+void MemoryManager::releaseSegment(Segment * segment) {
+	segment->decreaseReferenceCount();
+
+	if (segment->getReferenceCount() == 0) {
+		segments.erase(std::find(segments.begin(), segments.end(), segment));
+		delete segment;
+		
+		printTable();
 	}
 }
 

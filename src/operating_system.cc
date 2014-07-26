@@ -1,3 +1,4 @@
+#include <iostream>
 #include <fstream>
 #include <queue>
 
@@ -8,12 +9,15 @@
 #include "file.h"
 
 OperatingSystem::OperatingSystem(Scheduler * s, Processor * p, Memory * m, Disk * d) : scheduler(s) {
-	processManager = new ProcessManager(scheduler, p);
+	processManager = new ProcessManager(scheduler, p, this);
 	memoryManager = new MemoryManager(scheduler, m, this);
 	informationManager = new InformationManager(scheduler, d, "filesystem.txt");
 }
 
 void OperatingSystem::jobArrival(Job * j) {
+	std::cout << "Job \"" << j->getName();
+	std::cout << " just arrived to the system." << std::endl;
+
 	std::queue <Tree <std::string> *> nameNodes;
 	std::queue <Tree <Segment *> *> segmentNodes;
 
@@ -41,6 +45,26 @@ void OperatingSystem::jobArrival(Job * j) {
 		}
 	}
 	
+}
+
+void OperatingSystem::jobFinish(Job * j) {
+	std::cout << "Job \"" << j->getName();
+	std::cout << "\" finished." << std::endl;
+
+	// releases all the job segments
+	std::queue <Tree <Segment *> *> segmentNodes;
+	segmentNodes.push(j->getSegmentTree());
+	while (!segmentNodes.empty()) {
+		Tree <Segment *> * segmentNode = segmentNodes.front();
+		segmentNodes.pop();
+		memoryManager->releaseSegment(segmentNode->data);
+
+		for (auto child : segmentNode->children) {
+			segmentNodes.push(child);
+		}
+	}
+
+	processManager->jobFinish(j);
 }
 
 File * OperatingSystem::getFile(std::string name) {

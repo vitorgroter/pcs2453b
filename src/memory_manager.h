@@ -14,6 +14,7 @@ class MemoryManager {
 public:
 	MemoryManager(Scheduler * s, Memory * m, OperatingSystem * os);
 	void loadSegment(std::string name, int size, Segment ** segment, Job * j);
+	void releaseSegment(Segment * segment);
 	void printTable();
 
 private:

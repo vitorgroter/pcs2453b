@@ -5,6 +5,7 @@ Segment::Segment(std::string name, int position, int size) :
 	name(name),
 	position(position),
 	size(size)          {
+		referenceCount = 0;
 
 }
 

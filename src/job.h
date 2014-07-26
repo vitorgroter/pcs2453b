@@ -8,24 +8,19 @@ class Segment;
 class Job {
 public:
 	Job(const char filename[]);
-	
-	inline double getArrivalTime() {
-		return arrivalTime;
-	}
+	double getArrivalTime();
+	Tree <std::string> * getSegmentNameTree();
+	Tree <Segment *> * getSegmentTree();
+	bool areAllSegmentsLoaded();
 
-	inline Tree <std::string> * getSegmentNameTree() {
-		return segmentNameTree;
-	}
-
-	inline Tree <Segment *> * getSegmentTree() {
-		return segmentTree;
-	}
-
-	inline bool areAllSegmentsLoaded() {
-		return totalSegments == totalLoadedSegments;
-	}
+	double getTotalProcessingTime();
+	double getProcessingTime();
+	double getRemainingProcessingTime();
+	void increaseProcessingTime(double dt);
 
 	void increaseTotalLoadedSegments();
+
+	std::string getName();
 
 private:
 	double arrivalTime;
@@ -33,11 +28,14 @@ private:
 	int totalOutputs;
 	int totalFileAccesses;
 	double totalProcessingTime;
+	double processingTime;
 	Tree <std::string> * segmentNameTree;
 	Tree <Segment *> * segmentTree;
 
 	int totalSegments;
 	int totalLoadedSegments;
+	
+	std::string name;
 };
 
 #endif // JOB_H
