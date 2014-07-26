@@ -12,11 +12,16 @@ public:
 	ProcessManager(Scheduler * s, Processor * p);
 	void addJob(Job * job);
 
+	int multiprogramming;
+
 private:
 	Scheduler * scheduler;
 	Processor * processor;
 
-	std::list <Job *> jobs;
+	std::list <Job *> processingJobs;
+	std::list <Job *> waitingJobs;
+
+	double timeSlice;
 };
 
 #endif // PROCESS_MANAGER_H
