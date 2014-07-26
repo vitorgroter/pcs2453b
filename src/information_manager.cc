@@ -6,7 +6,7 @@
 #include "common.h"
 #include "file.h"
 
-InformationManager::InformationManager(Scheduler * s, Disk * d, std::string filename) : scheduler(s), disk(d) {
+InformationManager::InformationManager(Scheduler * s, std::string filename) : scheduler(s) {
 	std::string line;
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())

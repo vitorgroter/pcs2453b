@@ -6,10 +6,8 @@
 #include "events/time_slice_event.h"
 #include "events/job_finish_event.h"
 
-ProcessManager::ProcessManager(Scheduler * s, Processor * p, 
-							   OperatingSystem * os) :
-							   scheduler(s), processor(p),
-							   operatingSystem(os) {
+ProcessManager::ProcessManager(Scheduler * s, OperatingSystem * os) :
+							   scheduler(s), operatingSystem(os) {
 	multiprogramming = 100;
 	timeSliceDelay = 1.0;
 }

@@ -10,7 +10,7 @@ class Scheduler;
 
 class ProcessManager {
 public:
-	ProcessManager(Scheduler * s, Processor * p, OperatingSystem * os);
+	ProcessManager(Scheduler * s, OperatingSystem * os);
 	void addJob(Job * job);
 	void timeSlice();
 

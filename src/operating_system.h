@@ -2,9 +2,6 @@
 #define OPERATING_SYSTEM_H
 
 #include "scheduler.h"
-#include "processor.h"
-#include "memory.h"
-#include "disk.h"
 #include "process_manager.h"
 #include "memory_manager.h"
 #include "information_manager.h"
@@ -13,7 +10,7 @@ class Job;
 
 class OperatingSystem {
 public:
-	OperatingSystem(Scheduler * s, Processor * p, Memory * m, Disk * d);
+	OperatingSystem(Scheduler * s);
 	File * getFile(std::string name);
 
 	void jobArrival(Job * j);

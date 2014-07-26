@@ -1,17 +1,18 @@
+#include "memory_manager.h"
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <stdexcept>
 
-#include "segment.h"
-#include "memory_manager.h"
 #include "common.h"
-#include "memory.h"
 #include "job.h"
+#include "scheduler.h"
+#include "segment.h"
 #include "events/processor_request_event.h"
 
-MemoryManager::MemoryManager(Scheduler * s, Memory * m, OperatingSystem * os) : 
-							 scheduler(s), memory(m), operatingSystem(os) {
+MemoryManager::MemoryManager(Scheduler * s, OperatingSystem * os) : 
+							 scheduler(s), operatingSystem(os) {
+	memorySize = 500000;
 	printTable();
 }
 
@@ -80,7 +81,7 @@ int MemoryManager::findContiguousMemory(int size) {
 	// memory is empty
 	if (occupiedMemory.size() == 0) {
 		// memory is big enough
-		if (memory->getSize() >= size)
+		if (getMemorySize() >= size)
 			return 0;
 
 		// memory isn't big enough
@@ -99,7 +100,7 @@ int MemoryManager::findContiguousMemory(int size) {
 	}
 
 	// it fits in the ending of memory
-	if (memory->getSize() - occupiedMemory.back().second >= size)
+	if (getMemorySize() - occupiedMemory.back().second >= size)
 		return occupiedMemory.back().second;
 
 	return -1;
@@ -115,7 +116,7 @@ void MemoryManager::printTable() {
 	std::cout << getPageBreaker("Memory Table") << std::endl;
 	// memory is completely free
 	if (occupiedMemory.size() == 0) {
-		std::cout << "[0; " << memory->getSize() - 1 << "] - free" << std::endl;
+		std::cout << "[0; " << getMemorySize() - 1 << "] - free" << std::endl;
 	}
 
 	else {
@@ -143,13 +144,17 @@ void MemoryManager::printTable() {
 		std::cout << "] - " << segments.back()->getName() << std::endl;
 
 		// free space at the ending of memory
-		if (occupiedMemory.back().second != memory->getSize()) {
+		if (occupiedMemory.back().second != getMemorySize()) {
 			std::cout << "[" << occupiedMemory.back().second << "; ";
-			std::cout << memory->getSize() - 1;
+			std::cout << getMemorySize() - 1;
 			std::cout << "] - free" << std::endl;
 		}
 	}
 
 	std::cout << getPageBreaker("End of Memory Table") << std::endl << std::endl;
+}
+
+int MemoryManager::getMemorySize() {
+	return memorySize;
 }
 

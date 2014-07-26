@@ -1,9 +1,9 @@
 cmake_minimum_required (VERSION 2.6)
 project (SistOper)
-add_executable(SistOper src/common.cc src/disk.cc src/file.cc
-    src/information_manager.cc src/job.cc src/main.cc src/memory.cc
+add_executable(SistOper src/common.cc src/file.cc
+    src/information_manager.cc src/job.cc src/main.cc 
     src/memory_manager.cc src/operating_system.cc src/process_manager.cc
-    src/processor.cc src/segment.cc src/scheduler.cc src/events/job_arrival_event.cc
+    src/segment.cc src/scheduler.cc src/events/job_arrival_event.cc
     src/event.cc src/events/processor_request_event.cc src/events/time_slice_event.cc
 	src/events/job_finish_event.cc)
 

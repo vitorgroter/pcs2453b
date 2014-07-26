@@ -10,7 +10,7 @@ class Scheduler;
 
 class InformationManager {
 public:
-	InformationManager(Scheduler * s, Disk * d, std::string filename);
+	InformationManager(Scheduler * s, std::string filename);
 	~InformationManager();
 	File * getFile(std::string fullpath);
 

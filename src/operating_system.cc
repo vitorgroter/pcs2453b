@@ -8,10 +8,10 @@
 #include "information_manager.h"
 #include "file.h"
 
-OperatingSystem::OperatingSystem(Scheduler * s, Processor * p, Memory * m, Disk * d) : scheduler(s) {
-	processManager = new ProcessManager(scheduler, p, this);
-	memoryManager = new MemoryManager(scheduler, m, this);
-	informationManager = new InformationManager(scheduler, d, "filesystem.txt");
+OperatingSystem::OperatingSystem(Scheduler * s) : scheduler(s) {
+	processManager = new ProcessManager(scheduler, this);
+	memoryManager = new MemoryManager(scheduler, this);
+	informationManager = new InformationManager(scheduler, "filesystem.txt");
 }
 
 void OperatingSystem::jobArrival(Job * j) {

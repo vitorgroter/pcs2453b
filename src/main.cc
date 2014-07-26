@@ -1,17 +1,11 @@
 #include "scheduler.h"
-#include "processor.h"
-#include "memory.h"
-#include "disk.h"
 #include "operating_system.h"
 #include "job.h"
 #include "events/job_arrival_event.h"
 
 int main() {
 	Scheduler scheduler;
-	Processor cpu(&scheduler);
-	Memory mem(&scheduler);
-	Disk disk(&scheduler);
-	OperatingSystem os(&scheduler, &cpu, &mem, &disk);
+	OperatingSystem os(&scheduler);
 
 
 	Job j1("job1.txt");
