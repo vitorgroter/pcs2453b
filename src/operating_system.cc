@@ -9,7 +9,7 @@
 
 OperatingSystem::OperatingSystem(Scheduler * s, Clock * c, Processor * p, Memory * m, Disk * d) : scheduler(s) {
 	processManager = new ProcessManager(scheduler, p);
-	memoryManager = new MemoryManager(scheduler, m);
+	memoryManager = new MemoryManager(scheduler, m, this);
 	informationManager = new InformationManager(scheduler, d, "filesystem.txt");
 }
 
@@ -45,5 +45,9 @@ void OperatingSystem::jobArrival(Job * j) {
 
 File * OperatingSystem::getFile(std::string name) {
 	return informationManager->getFile(name);
+}
+
+void OperatingSystem::processorRequest(Job * j) {
+	processManager->addJob(j);
 }
 

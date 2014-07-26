@@ -5,8 +5,8 @@
 #include <queue>
 #include <stdexcept>
 
-#include "job.h"
 #include "common.h"
+#include "job.h"
 
 Job::Job(const char filename[]) {
 	std::ifstream file(filename);
@@ -93,8 +93,5 @@ Job::Job(const char filename[]) {
 
 void Job::increaseTotalLoadedSegments() {
 	totalLoadedSegments++;
-
-	if (totalLoadedSegments == totalSegments)
-		std::cout << "all segments loaded" << std::endl;
 }
 

@@ -1,9 +1,7 @@
 #ifndef JOB_H
 #define JOB_H
 
-#include "operating_system.h"
-#include "scheduler.h"
-#include "common.h"
+#include "tree.h"
 
 class Segment;
 
@@ -21,6 +19,10 @@ public:
 
 	inline Tree <Segment *> * getSegmentTree() {
 		return segmentTree;
+	}
+
+	inline bool areAllSegmentsLoaded() {
+		return totalSegments == totalLoadedSegments;
 	}
 
 	void increaseTotalLoadedSegments();

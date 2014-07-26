@@ -8,8 +8,10 @@
 #include "common.h"
 #include "memory.h"
 #include "job.h"
+#include "events/processor_request_event.h"
 
-MemoryManager::MemoryManager(Scheduler * s, Memory * m) : scheduler(s), memory(m) {
+MemoryManager::MemoryManager(Scheduler * s, Memory * m, OperatingSystem * os) : 
+							 scheduler(s), memory(m), operatingSystem(os) {
 	printTable();
 }
 
@@ -37,6 +39,12 @@ void MemoryManager::loadSegment(std::string name, int size, Segment ** segment, 
 	else {
 		(*segment)->increaseReferenceCount();
 		j->increaseTotalLoadedSegments();
+	}
+
+	if (j->areAllSegmentsLoaded()) {
+		std::cout << "all segments loaded" << std::endl;
+		ProcessorRequestEvent * event = new ProcessorRequestEvent(j, operatingSystem); 
+		scheduler->scheduleEvent(0.0, event);
 	}
 }
 
