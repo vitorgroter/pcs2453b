@@ -2,7 +2,6 @@
 #define OPERATING_SYSTEM_H
 
 #include "scheduler.h"
-#include "clock.h"
 #include "processor.h"
 #include "memory.h"
 #include "disk.h"
@@ -14,7 +13,7 @@ class Job;
 
 class OperatingSystem {
 public:
-	OperatingSystem(Scheduler * s, Clock * c, Processor * p, Memory * m, Disk * d);
+	OperatingSystem(Scheduler * s, Processor * p, Memory * m, Disk * d);
 	File * getFile(std::string name);
 
 	void jobArrival(Job * j);

@@ -1,5 +1,4 @@
 #include "scheduler.h"
-#include "clock.h"
 #include "processor.h"
 #include "memory.h"
 #include "disk.h"
@@ -9,11 +8,10 @@
 
 int main() {
 	Scheduler scheduler;
-	Clock clock(&scheduler);
 	Processor cpu(&scheduler);
 	Memory mem(&scheduler);
 	Disk disk(&scheduler);
-	OperatingSystem os(&scheduler, &clock, &cpu, &mem, &disk);
+	OperatingSystem os(&scheduler, &cpu, &mem, &disk);
 
 
 	Job j("job1.txt");

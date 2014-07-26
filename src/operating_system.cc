@@ -7,7 +7,7 @@
 #include "information_manager.h"
 #include "file.h"
 
-OperatingSystem::OperatingSystem(Scheduler * s, Clock * c, Processor * p, Memory * m, Disk * d) : scheduler(s) {
+OperatingSystem::OperatingSystem(Scheduler * s, Processor * p, Memory * m, Disk * d) : scheduler(s) {
 	processManager = new ProcessManager(scheduler, p);
 	memoryManager = new MemoryManager(scheduler, m, this);
 	informationManager = new InformationManager(scheduler, d, "filesystem.txt");
