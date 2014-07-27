@@ -32,6 +32,8 @@ private:
 	Tree <std::string> * segmentNameTree;
 	Tree <Segment *> * segmentTree;
 
+	double interrequestTime;
+
 	int totalSegments;
 	int totalLoadedSegments;
 	

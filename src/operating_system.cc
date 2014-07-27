@@ -16,7 +16,7 @@ OperatingSystem::OperatingSystem(Scheduler * s) : scheduler(s) {
 
 void OperatingSystem::jobArrival(Job * j) {
 	std::cout << "Job \"" << j->getName();
-	std::cout << " just arrived to the system." << std::endl;
+	std::cout << "\" just arrived to the system." << std::endl;
 
 	std::queue <Tree <std::string> *> nameNodes;
 	std::queue <Tree <Segment *> *> segmentNodes;

@@ -57,7 +57,8 @@ Job::Job(const char filename[]) : name(filename) {
 		}
 	}
 
-	// makes sure every segment in the segment name tree is a valid path string and create the segment tree
+	// makes sure every segment in the segment name tree is a valid path string
+	// and creates the segment tree
 	totalSegments = 0;
 
 	std::queue <Tree <std::string> *> nameNodes;
@@ -113,7 +114,6 @@ Tree <Segment *> * Job::getSegmentTree() {
 }
 
 bool Job::areAllSegmentsLoaded() {
-	std::cout << std::endl;
 	return totalSegments == totalLoadedSegments;
 }
 

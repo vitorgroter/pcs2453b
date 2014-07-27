@@ -13,7 +13,9 @@
 MemoryManager::MemoryManager(Scheduler * s, OperatingSystem * os) : 
 							 scheduler(s), operatingSystem(os) {
 	memorySize = 500000;
+	std::cout << "Initial memory table is all free" << std::endl;
 	printTable();
+	std::cout << std::endl;
 }
 
 void MemoryManager::loadSegment(std::string name, int size, Segment ** segment, Job * j) {
@@ -27,7 +29,10 @@ void MemoryManager::loadSegment(std::string name, int size, Segment ** segment, 
 			segments.push_back(*segment);
 			(*segment)->increaseReferenceCount();
 
+			std::cout << "Segment \"" + name + "\" loaded for job \"";
+			std::cout << j->getName() << "\"." << std::endl;
 			printTable();
+			std::cout << std::endl;
 
 			j->increaseTotalLoadedSegments();
 		}
@@ -38,6 +43,8 @@ void MemoryManager::loadSegment(std::string name, int size, Segment ** segment, 
 
 	// segment is already loaded
 	else {
+		std::cout << "Segment \"" + name + "\" requested by job \"";
+		std::cout << j->getName() << "\" is already loaded." << std::endl;
 		(*segment)->increaseReferenceCount();
 		j->increaseTotalLoadedSegments();
 	}
@@ -55,10 +62,13 @@ void MemoryManager::releaseSegment(Segment * segment) {
 	segment->decreaseReferenceCount();
 
 	if (segment->getReferenceCount() == 0) {
+		std::cout << "Segment " << segment->getName() << " is not in use by ";
+		std::cout << "any job, releasing its memory." << std::endl;
 		segments.erase(std::find(segments.begin(), segments.end(), segment));
 		delete segment;
 		
 		printTable();
+		std::cout << std::endl;
 	}
 }
 
@@ -151,7 +161,7 @@ void MemoryManager::printTable() {
 		}
 	}
 
-	std::cout << getPageBreaker("End of Memory Table") << std::endl << std::endl;
+	std::cout << getPageBreaker("End of Memory Table") << std::endl;
 }
 
 int MemoryManager::getMemorySize() {
